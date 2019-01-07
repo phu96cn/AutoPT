@@ -1,0 +1,16 @@
+void ControlClick(HWND hwnd)
+{
+	RECT    r;
+	GetWindowRect(hwnd, &r); 
+	POINT   ptCursor;
+	ptCursor.x = 791 + r.left;
+	ptCursor.y = 292 + r.top;
+	ScreenToClient(hwnd, &ptCursor);
+	LPARAM  lparam = MAKELPARAM(ptCursor.x, ptCursor.y);
+	//PostMessage(hwnd, WM_MOUSEMOVE, MK_CONTROL, lparam);
+	PostMessage(hwnd, WM_LBUTTONDOWN, MK_LBUTTON, lparam);
+	Sleep(500);
+	PostMessage(hwnd, WM_LBUTTONUP, MK_LBUTTON, lparam);
+	cout << ptCursor.x << " " << ptCursor.y << endl;
+}
+PostMessage(hwnd, WM_LBUTTONUP, MK_LBUTTON, lparam);

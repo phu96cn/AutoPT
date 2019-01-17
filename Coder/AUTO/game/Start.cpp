@@ -35,6 +35,12 @@ void ControlClick(HWND hwnd)
 	Mclick(hwnd, 662, 175,500);
 	//Mclick(hwnd, 395, 383, 500);
 }
+void SetWindow(HWND hwnd){
+	RECT    r;
+	GetWindowRect(hwnd, &r);
+	MoveWindow(hwnd, 0, 0, r.right - r.left, r.bottom - r.top, true);
+		cout << r.left << "  " << r.top << endl;
+}
 int main() {
 	char a[1024] = " Phong Than_Dong Thien Phuc Dia";
 	HWND hwn=FindWindow(NULL, a);;
@@ -47,12 +53,9 @@ int main() {
 			GetTickCount(),
 			GetCurrentProcessId());
 		SetConsoleTitle(b);*/
-	//	RECT    r;
-	//	GetWindowRect(hwn, &r);
-	//	MoveWindow(hwndFound, 0, 0,r.right-r.left, r.bottom - r.top, true);
-	//	cout << r.left << "  " << r.top << endl;
+	//	
 		//ControlClick(hwn);
-		//cout << hwndFound << endl;
+		SetWindow(hwn);
 		Sleep(3000);
 		system("pause");
 	}

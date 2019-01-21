@@ -5,33 +5,36 @@
 #include "define.h"
 #define _CRT_SECURE_NO_WARNINGS
 using namespace std;
-LPARAM pt(HWND hwnd, int x, int y) {
-	RECT    r;
-	GetWindowRect(hwnd, &r);
-	//cout << r.left <<"  "<<r.top << endl;
+LPARAM pt(int x, int y) {
 	POINT   ptc;
 	ptc.x = x - 3;
 	ptc.y = y - 25;
-	//ScreenToClient(hwnd, &ptc);
-	//cout << ptc.x <<"  "<< ptc.y<<endl;
 	LPARAM  lparam = MAKELPARAM(ptc.x, ptc.y);
 	return lparam;
 }
 void Mclick(HWND hwnd, int x, int y,int sl) {
-	PostMessage(hwnd, WM_LBUTTONDOWN, MK_LBUTTON, pt(hwnd, x, y));
+	PostMessage(hwnd, WM_LBUTTONDOWN, MK_LBUTTON, pt(x, y));
 	Sleep(sl);
-	PostMessage(hwnd, WM_LBUTTONUP, MK_LBUTTON, pt(hwnd, x, y));
+	PostMessage(hwnd, WM_LBUTTONUP, MK_LBUTTON, pt( x, y));
 	Sleep(sl);
 }
 void MclickDB(HWND hwnd, int x, int y) {
-	PostMessage(hwnd, WM_LBUTTONDBLCLK, MK_LBUTTON, pt(hwnd, x, y));
+	PostMessage(hwnd, WM_LBUTTONDBLCLK, MK_LBUTTON, pt(x, y));
 	//PostMessage(hwnd, WM_LBUTTONUP, MK_LBUTTON, pt(hwnd, x, y));
 }
 void Mmove(HWND hwnd, int x, int y, int sl) {
-	PostMessage(hwnd, WM_MOUSEMOVE, MK_CONTROL, pt(hwnd, x, y));
+	PostMessage(hwnd, WM_MOUSEMOVE, MK_CONTROL, pt(x, y));
 	Sleep(sl);
 }
-
+void SendKey(HWND hwnd){
+	{
+		//SendMessage(hwnd, EM_REPLACESEL, (WPARAM)TRUE, (LPARAM)text);
+		SendMessage(hwnd, WM_KEYDOWN, VK_F5, 1);
+		Sleep(500);
+		SendMessage(hwnd, WM_KEYUP, VK_F5, 1);
+		//return 1;
+	}
+}
 void ControlClick(HWND hwnd)
 {
 	//Mclick(hwnd, 662, 175, 500);
@@ -75,32 +78,27 @@ bool Write_MemoryI(HWND hwnd, DWORD Address, int Value){
 	}
 	return false;
 }
-bool Write_MemoryS(HWND hwnd, DWORD Address){
+bool Write_MemoryS(HWND hwnd, DWORD Address, char Value[]){
 	DWORD procID;
 	GetWindowThreadProcessId(hwnd, &procID);
 	HANDLE handle = OpenProcess(PROCESS_ALL_ACCESS, FALSE, procID);
-	char Value[4] = "215";
 	if (WriteProcessMemory(handle, (LPVOID)Address, &Value, sizeof(Value), NULL)){
 		return true;
 	}
 	return false;
 }
-void Test(){
-	int a=5;
-	char b = 'a';
-	if (typeid(a) == typeid(int)){
-		cout << "1";
-	}
-	if (typeid(b) == typeid(int)){
-		cout << "2";
-	}else
-	if (typeid(b) == typeid(char)){
-		cout << "3";
-	}
-	else{
-		cout << "0";
-	}
+void SearchWay(HWND hwnd, char Valuex[], char Valuey[]){
+	Write_MemoryS(hwnd, M_ToadoX, Valuex);
+	Write_MemoryS(hwnd, M_ToadoY, Valuey);
+	MclickDB(hwnd, 0, 1); //click nut tim duong
 }
+void Test(char Valuex[]){
+	printf("%s", Valuex);
+}
+void Test2(char Valuex[]){
+	Test(Valuex);
+}
+
 int main() {
 	HWND hwn = FindWindow(NULL, tile_PhongThan);
 	while (true)
@@ -117,10 +115,12 @@ int main() {
 	//	ReadMem(hwn);
 	//	STRING = 1;
 		//ReadMemory(hwn, AddressTen);
-		cout << ReadMemoryS(hwn, M_ToadoX);
-		cout << Write_MemoryS(hwn, M_ToadoX);
+		//cout << ReadMemoryS(hwn, M_ToadoX);
+		//cout << Write_MemoryS(hwn, M_ToadoX,"215");
+
+		//printf("%x \n",M_ToadoY);
 //		Sleep(3000);
-		//Test();
+		Test2("255");
 		system("pause");
 		
 	}

@@ -14,3 +14,4 @@
 #define NV_AddressTen 0x0599CBEC
 //Map
 #define M_ToadoX 0x10DCFEB4
+#define M_ToadoY M_ToadoX+0x0006

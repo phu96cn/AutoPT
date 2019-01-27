@@ -15,29 +15,44 @@ $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y
 $Add_thanhad=_MemoryRead($baseAddress_thanh ,$hw) + 0xF0B2C4 ; Address Thanh
 $Add_toadonvX=0xed8e30 ;Address toado nhan vat X
 $Add_toadonvY=0xed8e34 ;Address toado nhan vat Y
-$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; L·∫•y tr·∫°ng th√°i t·ª± ƒë√°nh
-; L·∫•y Address thu th·∫≠p
+$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; L?y tr?ng th·i t? d·nh
+; lay Address HP
+$Add_HP=_memoryread($baseAddress_nhanvat,$hw)+0xc714
+$HP=_memoryread($Add_HP,$hw,"int")
+; L?y Address thu th?p
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
 ;Func
-;Send(MemoryRead($nvchieuhon,"char[100]"))
-;Start()
-$chose=InputBox("","Ch·ªçn v·ªã tr√≠ ƒë√°nh thu th·∫≠p")
+;Send(MemoryRead($Add_thanhad,"char[100]"))
+
+$chose=InputBox("","Ch?n v? trÌ d·nh thu th?p")
    Start()
 Func ThuThap()
-   While (MemoryRead($nvchieuhon,"char[100]")<>" H√•i b¬∏o <c=g>Th√± Kh√®<c>")
+   While (MemoryRead($nvchieuhon,"char[100]")<>" HÂi b∏o <c=g>ThÒ KhË<c>")
 	  While(MemoryRead($Add_TTudanh,"int")==0)
 	  CtrClick(790,289)
 	  Sleep(1000)
 	  WEnd
 	  Sleep(2000)
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
+	  Sleep(2000)
+
    WEnd
+
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
 EndFunc
-
 Func CtrClick(ByRef $ctrM_x,ByRef $ctrM_y)
    ControlClick($hWnd, "", "","left",1,$ctrM_x-3,$ctrM_y-25)
 EndFunc
@@ -53,31 +68,28 @@ Func MemoryWrite(ByRef $Address,ByRef $Value,ByRef $Type )
    _MemoryWrite($Address , $hw, $Value,$Type)
 EndFunc
 Func TimDuong(ByRef $ValueX,ByRef $ValueY)
+   While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
    $Thanhht=LayTenThanh()
    MemoryWrite($Add_nhaptdX,$ValueX,"CHAR[20]")
    MemoryWrite($Add_nhaptdY,$ValueY,"CHAR[20]")
    CtrClick(747,177)
    Sleep(1000)
    While (_MemoryRead(0x759CD1,$hw))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  Sleep(2000)
    WEnd
 EndFunc
 Func LayTenThanh()
    $thanh= MemoryRead( $Add_thanhad,"char[20]")
    Return $thanh
-EndFunc
-Func VeNHC()
-   If(KtraThanh("Th√± D¬≠¬¨ng s¬¨n") == 1) Then
-	  TimDuong(200,198)
-	  CtrClick(550,321)
-	  Sleep(2000)
-	  Return 0
-   ElseIf(KtraThanh("T¬©y C¬´n L¬´n") == 1) Then
-	  TimDuong(231,235)
-	  CtrClick(352,571)
-	  Sleep(2000)
-	  Return 0
-   EndIf
 EndFunc
 Func KtraToado(ByRef $ToadoX,ByRef $ToadoY)
    $TdX= Int(MemoryRead($Add_toadonvX,"Int")/256)
@@ -98,23 +110,46 @@ Func KtraThanh(ByRef $Text)
 	  Return 0
    EndIf
 EndFunc
+Func VeSungThanhDoanh()
+   While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
+   If(KtraThanh("SÔng thµnh") == 1) Then
+	  TimDuong(227,184)
+	  CtrClick(545,127)
+	  Sleep(2000)
+	  Return 0
+   ElseIf(KtraThanh("Bæc H∂i") == 1) Then
+	  TimDuong(241,175)
+	  CtrClick(483,147)
+	  Sleep(2000)
+	  Return 0
+   EndIf
+EndFunc
 Func NhanNV()
-   If (MemoryRead($nvchieuhon,"char[100]")<>" H√•i b¬∏o <c=g>Th√± Kh√®<c>" ) Then
+   If (MemoryRead($nvchieuhon,"char[100]")<>" HÂi b∏o <c=g>ThÒ KhË<c>" ) Then
 	  If (MemoryRead($nvchieuhon,"char[100]")<>"" ) Then
 		 Return 1
 	  EndIf
    EndIf
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
-   While KtraThanh("Ng√§c H¬≠ cung") == 0
-	  VeNHC()
+   While KtraThanh("SÔng Thµnh doanh") == 0
+	  VeSungThanhDoanh()
    WEnd
-   TimDuong(217,200) ; Thu kho NHC
-   CtrClick(557,316) ; Click Th·ªß Kh·ªë
+   TimDuong(202,198) ; Thu kho
+   CtrClick(341,282) ; Click Th? Kh?
    Sleep(4000)
-   CtrClick(303,328) ; Click K·∫ø T·ª•c
+   CtrClick(303,328) ; ClickUI 1
    Sleep(2000)
    CtrClick(303,328) ; Tra nv
    Sleep(2000)
@@ -127,59 +162,65 @@ Func NhanNV()
    CtrClick(303,328) ; ket thuc
    2000
 EndFunc
-Func RaThuDuongSon()
-   While KtraThanh("Ng√§c H¬≠ cung") == 0
-	  VeNHC()
+Func RaSungThanh()
+   While KtraThanh("SÔng Thµnh doanh") == 0
+	  VeSungThanhDoanh()
    WEnd
-   TimDuong(204,204) ; Cua thu duong son
-   CtrClick(293,451) ; Click chuyen map
+   TimDuong(192,204) ; Cua thu sungthanh
+   CtrClick(364,477) ; Click chuyen map
    Sleep(2000)
 EndFunc
-Func RaTayConLuan()
-   If KtraThanh("T¬©y C¬´n L¬´n") == 1 Then
+Func RaBacHai()
+   If KtraThanh("Bæc H∂i") == 1 Then
 	  Return 1
    EndIf
-   While KtraThanh("Ng√§c H¬≠ cung") == 0
-	  VeNHC()
+   While KtraThanh("SÔng Thµnh doanh") == 0
+	  VeSungThanhDoanh()
    WEnd
-   TimDuong(222,193) ; Cua tay con luan
-   CtrClick(410,343) ; Click chuyen map
+   TimDuong(193,195) ; Cua BacHai
+   CtrClick(266,120) ; Click chuyen map
    Sleep(2000)
 EndFunc
 Func Start()
    While true
-   NhanNV()
-   While KtraThanh("Th√± D¬≠¬¨ng s¬¨n") == 0
-	  RaThuDuongSon()
-   WEnd
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
+   NhanNV()
+   While KtraThanh("SÔng thµnh") == 0
+	  RaSungThanh()
+   WEnd
+
    Switch $chose
 	  Case 1
-		 while KtraToado(206,205)==1
-		 TimDuong(206,205)
+		 while KtraToado(220,180)==1
+		 TimDuong(220,180)
 		 WEnd
 	  Case 2
-		 while KtraToado(198,202)==1
-        TimDuong(198,202)
+		 while KtraToado(217,179)==1
+        TimDuong(217,179)
 		WEnd
 	  Case 3
-		while KtraToado(190,203)==1
-        TimDuong(190,203)
+		while KtraToado(213,181)==1
+        TimDuong(213,181)
 		WEnd
 	  Case 4
-		while KtraToado(186,203)==1
-        TimDuong(186,203)
+		while KtraToado(209,180)==1
+        TimDuong(209,180)
 		WEnd
 	  Case 5
-		while KtraToado(193,200)==1
-        TimDuong(193,200)
+		while KtraToado(202,179)==1
+        TimDuong(202,179)
 		WEnd
 	  Case 6
 		while KtraToado(191,196)==1
-		TimDuong(191,196)
+		TimDuong(206,182)
 		WEnd
 	  Case Else
    EndSwitch

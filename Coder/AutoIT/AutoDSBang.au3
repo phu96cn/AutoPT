@@ -15,8 +15,11 @@ $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y
 $Add_thanhad=_MemoryRead($baseAddress_thanh ,$hw) + 0xF0B2C4 ; Address Thanh
 $Add_toadonvX=0xed8e30 ;Address toado nhan vat X
 $Add_toadonvY=0xed8e34 ;Address toado nhan vat Y
-$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; Lấy trạng thái tự đánh
-; Lấy Address thu thập
+$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; L?y tr?ng thái t? dánh
+; lay Address HP
+$Add_HP=_memoryread($baseAddress_nhanvat,$hw)+0xc714
+$HP=_memoryread($Add_HP,$hw,"int")
+; L?y Address thu th?p
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
 ;Func
@@ -31,8 +34,21 @@ Func ThuThap()
 	  Sleep(1000)
 	  WEnd
 	  Sleep(2000)
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
+	  Sleep(2000)
+
    WEnd
+
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
@@ -53,12 +69,22 @@ Func MemoryWrite(ByRef $Address,ByRef $Value,ByRef $Type )
    _MemoryWrite($Address , $hw, $Value,$Type)
 EndFunc
 Func TimDuong(ByRef $ValueX,ByRef $ValueY)
+   While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
    $Thanhht=LayTenThanh()
    MemoryWrite($Add_nhaptdX,$ValueX,"CHAR[20]")
    MemoryWrite($Add_nhaptdY,$ValueY,"CHAR[20]")
    CtrClick(747,177)
    Sleep(1000)
    While (_MemoryRead(0x759CD1,$hw))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  Sleep(2000)
    WEnd
 EndFunc
@@ -105,6 +131,11 @@ Func NhanNV()
 	  EndIf
    EndIf
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
@@ -148,14 +179,20 @@ Func RaTayConLuan()
 EndFunc
 Func Start()
    While true
+   While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
+	  CtrClick(790,289)
+	  Sleep(1000)
+   WEnd
    NhanNV()
    While KtraThanh("Thñ D­¬ng s¬n") == 0
 	  RaThuDuongSon()
    WEnd
-   While(MemoryRead($Add_TTudanh,"int"))
-	  CtrClick(790,289)
-	  Sleep(1000)
-   WEnd
+
    Switch $chose
 	  Case 1
 		 while KtraToado(206,205)==1

@@ -15,29 +15,48 @@ $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y
 $Add_thanhad=_MemoryRead($baseAddress_thanh ,$hw) + 0xF0B2C4 ; Address Thanh
 $Add_toadonvX=0xed8e30 ;Address toado nhan vat X
 $Add_toadonvY=0xed8e34 ;Address toado nhan vat Y
-$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; Lấy trạng thái tự đánh
-; Lấy Address thu thập
+$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; L?y tr?ng thái t? dánh
+; lay Address HP
+$Add_HP=_memoryread($baseAddress_nhanvat,$hw)+0xc714
+$HP=_memoryread($Add_HP,$hw,"int")
+; L?y Address thu th?p
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
 ;Func
-;Send(MemoryRead($nvchieuhon,"char[100]"))
-;Start()
-$chose=InputBox("","Chọn vị trí đánh thu thập")
-   Start()
+Send("CtrClick( ")
+Send(MemoryRead($Add_HP,"Int"))
+Send(" , ")
+Send(MemoryRead($Add_HP,"Int"))
+Send(" )")
+
+;$chose=InputBox("","Chọn vị trí đánh thu thập")
+   ;Start()
 Func ThuThap()
    While (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>")
 	  While(MemoryRead($Add_TTudanh,"int")==0)
-	  CtrClick(790,289)
-	  Sleep(1000)
+		 CtrClick(790,289)
+		 Sleep(1000)
 	  WEnd
-	  Sleep(2000)
+		 Sleep(2000)
+	  While(MemoryRead($Add_HP,"int")==0)
+		 CtrClick(276,296)
+		 Sleep(1000)
+		 Start()
+	  WEnd
+		 Sleep(2000)
+
    WEnd
+
    While(MemoryRead($Add_TTudanh,"int"))
-	  CtrClick(790,289)
+	  While(MemoryRead($Add_HP,"int")==0)
+		 CtrClick(276,296)
+		 Sleep(1000)
+		 Start()
+	  WEnd
+		 CtrClick(790,289)
 	  Sleep(1000)
    WEnd
 EndFunc
-
 Func CtrClick(ByRef $ctrM_x,ByRef $ctrM_y)
    ControlClick($hWnd, "", "","left",1,$ctrM_x-3,$ctrM_y-25)
 EndFunc
@@ -53,12 +72,22 @@ Func MemoryWrite(ByRef $Address,ByRef $Value,ByRef $Type )
    _MemoryWrite($Address , $hw, $Value,$Type)
 EndFunc
 Func TimDuong(ByRef $ValueX,ByRef $ValueY)
+   While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
    $Thanhht=LayTenThanh()
    MemoryWrite($Add_nhaptdX,$ValueX,"CHAR[20]")
    MemoryWrite($Add_nhaptdY,$ValueY,"CHAR[20]")
    CtrClick(747,177)
    Sleep(1000)
    While (_MemoryRead(0x759CD1,$hw))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  Sleep(2000)
    WEnd
 EndFunc
@@ -105,6 +134,11 @@ Func NhanNV()
 	  EndIf
    EndIf
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
@@ -120,10 +154,9 @@ Func NhanNV()
    Sleep(2000)
    CtrClick(303,328) ; Click ke tuc
    Sleep(2000)
-   CtrClick(303,328) ; Click tuyet quai
+  ; CtrClick(303,328) ; Click tuyet quai
+   CtrClick(403,328) ; Click bang lang
    Sleep(2000)
-   ;CtrClick(403,328) ; Click bang lang
-  ; Sleep(500)
    CtrClick(303,328) ; ket thuc
    2000
 EndFunc
@@ -148,38 +181,55 @@ Func RaTayConLuan()
 EndFunc
 Func Start()
    While true
-   NhanNV()
-   While KtraThanh("Thñ D­¬ng s¬n") == 0
-	  RaThuDuongSon()
-   WEnd
    While(MemoryRead($Add_TTudanh,"int"))
+	  While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
 	  CtrClick(790,289)
 	  Sleep(1000)
    WEnd
+   NhanNV()
+   While KtraThanh("T©y C«n L«n") == 0
+	  RaTayConLuan()
+   WEnd
    Switch $chose
-	  Case 1
-		 while KtraToado(206,205)==1
-		 TimDuong(206,205)
+   Case 1
+		 while KtraToado(204,236)==1
+		 TimDuong(204,236)
 		 WEnd
 	  Case 2
-		 while KtraToado(198,202)==1
-        TimDuong(198,202)
+		 while KtraToado(210,234)==1
+        TimDuong(210,234)
 		WEnd
 	  Case 3
-		while KtraToado(190,203)==1
-        TimDuong(190,203)
+		while KtraToado(201,227)==1
+        TimDuong(201,227)
 		WEnd
 	  Case 4
-		while KtraToado(186,203)==1
-        TimDuong(186,203)
+		while KtraToado(207,227)==1
+        TimDuong(207,227)
 		WEnd
 	  Case 5
-		while KtraToado(193,200)==1
-        TimDuong(193,200)
+		while KtraToado(203,223)==1
+        TimDuong(203,223)
 		WEnd
 	  Case 6
-		while KtraToado(191,196)==1
-		TimDuong(191,196)
+		while KtraToado(210,223)==1
+		TimDuong(210,223)
+	 WEnd
+	 Case 7
+		while KtraToado(221,214)==1
+        TimDuong(221,214)
+		WEnd
+	  Case 8
+		while KtraToado(227,212)==1
+        TimDuong(227,212)
+		WEnd
+	  Case 9
+		while KtraToado(230,214)==1
+		TimDuong(230,214)
 		WEnd
 	  Case Else
    EndSwitch

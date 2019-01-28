@@ -1,4 +1,3 @@
-#include <NomadMemory.au3>
 $hWnd = WinGetHandle(" Phong Than_Dong Thien Phuc Dia")
 $Pid=WinGetProcess ($hWnd)
 Global $hw= _MemoryOpen($Pid)
@@ -9,24 +8,20 @@ $baseAddress_nhanvat=0x009CEDB4
 $BaseAddress_tien= 0x00765414
 $BaseAddress_Nhiemvu=0x00761A98
 $BaseAddress_TTudanh =0xad3ac0
+$BaseAddress_CapNv=0x5A1C44 ;
 ;Address
 $Add_nhaptdX=_MemoryRead($baseAddress_nhaptd,$hw) + 0x314 ;Address input X
 $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y
 $Add_thanhad=_MemoryRead($baseAddress_thanh ,$hw) + 0xF0B2C4 ; Address Thanh
 $Add_toadonvX=0xed8e30 ;Address toado nhan vat X
 $Add_toadonvY=0xed8e34 ;Address toado nhan vat Y
-$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; Lấy trạng thái tự đánh
+$Add_TTudanh= _MemoryRead($BaseAddress_TTudanh,$hw)+0xed3ac0 ; L?y tr?ng thái t? dánh
 ; lay Address HP
 $Add_HP=_memoryread($baseAddress_nhanvat,$hw)+0xc714
 $HP=_memoryread($Add_HP,$hw,"int")
-; Lấy Address thu thập
+; L?y Address thu th?p
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
-;Func
-;Send(MemoryRead($nvchieuhon,"char[100]"))
-
-$chose=InputBox("","Chọn vị trí đánh thu thập")
-   Start()
 Func ThuThap()
    While (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>")
 	  While(MemoryRead($Add_TTudanh,"int")==0)
@@ -53,7 +48,6 @@ Func ThuThap()
 	  Sleep(1000)
    WEnd
 EndFunc
-
 Func CtrClick(ByRef $ctrM_x,ByRef $ctrM_y)
    ControlClick($hWnd, "", "","left",1,$ctrM_x-3,$ctrM_y-25)
 EndFunc
@@ -92,19 +86,6 @@ Func LayTenThanh()
    $thanh= MemoryRead( $Add_thanhad,"char[20]")
    Return $thanh
 EndFunc
-Func VeNHC()
-   If(KtraThanh("Thñ D­¬ng s¬n") == 1) Then
-	  TimDuong(200,198)
-	  CtrClick(550,321)
-	  Sleep(2000)
-	  Return 0
-   ElseIf(KtraThanh("T©y C«n L«n") == 1) Then
-	  TimDuong(231,235)
-	  CtrClick(352,571)
-	  Sleep(2000)
-	  Return 0
-   EndIf
-EndFunc
 Func KtraToado(ByRef $ToadoX,ByRef $ToadoY)
    $TdX= Int(MemoryRead($Add_toadonvX,"Int")/256)
    If $TdX <> $ToadoX Then
@@ -124,102 +105,5 @@ Func KtraThanh(ByRef $Text)
 	  Return 0
    EndIf
 EndFunc
-Func NhanNV()
-   If (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>" ) Then
-	  If (MemoryRead($nvchieuhon,"char[100]")<>"" ) Then
-		 Return 1
-	  EndIf
-   EndIf
-   While(MemoryRead($Add_TTudanh,"int"))
-	  While(MemoryRead($Add_HP,"int")==0)
-	  CtrClick(276,296)
-	  Sleep(1000)
-	  Start()
-	  WEnd
-	  CtrClick(790,289)
-	  Sleep(1000)
-   WEnd
-   While KtraThanh("Ngäc H­ cung") == 0
-	  VeNHC()
-   WEnd
-   TimDuong(217,200) ; Thu kho NHC
-   CtrClick(557,316) ; Click Thủ Khố
-   Sleep(4000)
-   CtrClick(303,328) ; Click Kế Tục
-   Sleep(2000)
-   CtrClick(303,328) ; Tra nv
-   Sleep(2000)
-   CtrClick(303,328) ; Click ke tuc
-   Sleep(2000)
-   CtrClick(303,328) ; Click tuyet quai
-   Sleep(2000)
-   ;CtrClick(403,328) ; Click bang lang
-  ; Sleep(500)
-   CtrClick(303,328) ; ket thuc
-   2000
-EndFunc
-Func RaThuDuongSon()
-   While KtraThanh("Ngäc H­ cung") == 0
-	  VeNHC()
-   WEnd
-   TimDuong(204,204) ; Cua thu duong son
-   CtrClick(293,451) ; Click chuyen map
-   Sleep(2000)
-EndFunc
-Func RaTayConLuan()
-   If KtraThanh("T©y C«n L«n") == 1 Then
-	  Return 1
-   EndIf
-   While KtraThanh("Ngäc H­ cung") == 0
-	  VeNHC()
-   WEnd
-   TimDuong(222,193) ; Cua tay con luan
-   CtrClick(410,343) ; Click chuyen map
-   Sleep(2000)
-EndFunc
-Func Start()
-   While true
-   While(MemoryRead($Add_TTudanh,"int"))
-	  While(MemoryRead($Add_HP,"int")==0)
-	  CtrClick(276,296)
-	  Sleep(1000)
-	  Start()
-	  WEnd
-	  CtrClick(790,289)
-	  Sleep(1000)
-   WEnd
-   NhanNV()
-   While KtraThanh("Thñ D­¬ng s¬n") == 0
-	  RaThuDuongSon()
-   WEnd
 
-   Switch $chose
-	  Case 1
-		 while KtraToado(206,205)==1
-		 TimDuong(206,205)
-		 WEnd
-	  Case 2
-		 while KtraToado(198,202)==1
-        TimDuong(198,202)
-		WEnd
-	  Case 3
-		while KtraToado(190,203)==1
-        TimDuong(190,203)
-		WEnd
-	  Case 4
-		while KtraToado(186,203)==1
-        TimDuong(186,203)
-		WEnd
-	  Case 5
-		while KtraToado(193,200)==1
-        TimDuong(193,200)
-		WEnd
-	  Case 6
-		while KtraToado(191,196)==1
-		TimDuong(191,196)
-		WEnd
-	  Case Else
-   EndSwitch
-   ThuThap()
-   WEnd
-EndFunc
+

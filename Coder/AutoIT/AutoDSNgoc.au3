@@ -23,14 +23,10 @@ $HP=_memoryread($Add_HP,$hw,"int")
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
 ;Func
-Send("CtrClick( ")
-Send(MemoryRead($Add_HP,"Int"))
-Send(" , ")
-Send(MemoryRead($Add_HP,"Int"))
-Send(" )")
+;Send(MemoryRead($nvchieuhon,"char[100]"))
 
-;$chose=InputBox("","Chọn vị trí đánh thu thập")
-   ;Start()
+$chose=InputBox("","Chọn vị trí đánh thu thập")
+   Start()
 Func ThuThap()
    While (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>")
 	  While(MemoryRead($Add_TTudanh,"int")==0)

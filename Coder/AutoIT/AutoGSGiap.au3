@@ -24,8 +24,7 @@ $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
 ;Func
 ;Send(MemoryRead($nvchieuhon,"char[100]"))
-;Send(MemoryRead($Add_HP,"int"))
-;Start()
+
 $chose=InputBox("","Ch?n v? trí dánh thu th?p")
    Start()
 Func ThuThap()
@@ -147,6 +146,7 @@ Func NhanNV()
    While KtraThanh("Sïng Thµnh doanh") == 0
 	  VeSungThanhDoanh()
    WEnd
+   While(MemoryRead($nvchieuhon,"char[100]")<>" §èi t­îng nhiÖm vô lÇn nµy: <c=r>KiÕm Nh©n<c> (30)")
    TimDuong(202,198) ; Thu kho
    CtrClick(341,282) ; Click Th? Kh?
    Sleep(4000)
@@ -159,8 +159,10 @@ Func NhanNV()
    ;CtrClick(303,328) ; Click tuyet quai
    CtrClick(403,328) ; Click bang lang
    Sleep(2000)
-   CtrClick(303,328) ; ket thuc
-   2000
+	  ;CtrClick(303,328) ; ket thuc
+	  CtrKeyboard('^{ESC}')
+	  Sleep(2000)
+   Wend
 EndFunc
 Func RaSungThanh()
    While KtraThanh("Sïng Thµnh doanh") == 0

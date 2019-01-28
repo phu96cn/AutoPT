@@ -22,6 +22,15 @@ $HP=_memoryread($Add_HP,$hw,"int")
 ; L?y Address thu th?p
 $nvchieuhon=_memoryread($BaseAddress_Nhiemvu,$hw)+0x0
 $nvchieuhon=_memoryread($nvchieuhon,$hw)+0x115
+Func KtraNhanNV()
+   If (MemoryRead($nvchieuhon,"char[100]")==" Håi b¸o <c=g>Thñ Khè<c>" ) Then
+	  return 1
+   EndIf
+	  If (MemoryRead($nvchieuhon,"char[100]")=="" ) Then
+		 Return 1
+	  EndIf
+   return 0
+EndFunc
 Func ThuThap()
    While (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>")
 	  While(MemoryRead($Add_TTudanh,"int")==0)

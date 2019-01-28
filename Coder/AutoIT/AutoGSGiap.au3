@@ -23,10 +23,8 @@ Func VeSungThanhDoanh()
    EndIf
 EndFunc
 Func NhanNV()
-   If (MemoryRead($nvchieuhon,"char[100]")<>" Håi b¸o <c=g>Thñ Khè<c>" ) Then
-	  If (MemoryRead($nvchieuhon,"char[100]")<>"" ) Then
-		 Return 1
-	  EndIf
+   If (KtraNhanNV()==0) Then
+	  Return 1
    EndIf
    While(MemoryRead($Add_TTudanh,"int"))
 	  While(MemoryRead($Add_HP,"int")==0)
@@ -40,21 +38,24 @@ Func NhanNV()
    While KtraThanh("Sïng Thµnh doanh") == 0
 	  VeSungThanhDoanh()
    WEnd
-   While(MemoryRead($nvchieuhon,"char[100]")<>" §èi t­îng nhiÖm vô lÇn nµy: <c=r>X¹ Nh©n<c> (30)")
+   While(KtraNhanNV()==1)
 	  TimDuong(201,198) ; Thu kho
 	  CtrClick(575,287) ; Click Th? Kh?
    Sleep(4000)
    CtrClick(303,328) ; ClickUI 1
    Sleep(2000)
-   CtrClick(303,328) ; Tra nv
+   CtrClick(303,328) ; ClickUI 1
+   Sleep(2000)
+   CtrClick(403,328) ; Tra nv
    Sleep(2000)
    CtrClick(303,328) ; Click ke tuc
    Sleep(2000)
    ;CtrClick(303,328) ; Click tuyet quai
    CtrClick(403,328) ; Click bang lang
    Sleep(2000)
-	  ;CtrClick(303,328) ; ket thuc
-	  CtrKeyboard('{ESC}')
+	  CtrClick(303,328) ; ket thuc
+	  CtrClick(303,328) ; ket thuc
+	  ;CtrKeyboard('{ESC}')
 	  Sleep(2000)
    Wend
 EndFunc

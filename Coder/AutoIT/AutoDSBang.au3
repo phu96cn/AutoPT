@@ -1,7 +1,7 @@
 #include <NomadMemory.au3>
 #include <Func.au3>
 ;Func
-;Send(MemoryRead($nvchieuhon,"char[100]"))
+Send(MemoryRead($nvchieuhon,"char[100]"))
 $chose=InputBox("","Chon vi tri danh")
    Start()
 Func VeNHC()
@@ -40,7 +40,7 @@ Func NhanNV()
    While KtraThanh("Ngäc H­ cung") == 0
 	  VeNHC()
    WEnd
-   While(MemoryRead($nvchieuhon,"char[100]")<>" §èi t­îng nhiÖm vô lÇn nµy: <c=r>KiÕm Nh©n<c> (30)")
+   While(MemoryRead($nvchieuhon,"char[100]")<>" §èi t­îng nhiÖm vô lÇn nµy: <c=r>TuyÕt qu¸i<c> (30)")
    TimDuong(217,200) ; Thu kho NHC
    CtrClick(557,316) ; Click Thủ Khố
    Sleep(4000)

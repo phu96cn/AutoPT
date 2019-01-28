@@ -40,7 +40,7 @@ Func NhanNV()
    While KtraThanh("SÔng Thµnh doanh") == 0
 	  VeSungThanhDoanh()
    WEnd
-   While(MemoryRead($nvchieuhon,"char[100]")<>" ßËi t≠Óng nhi÷m vÙ l«n nµy: <c=r>Ki’m Nh©n<c> (30)")
+   While(MemoryRead($nvchieuhon,"char[100]")<>" ßËi t≠Óng nhi÷m vÙ l«n nµy: <c=r>Xπ Nh©n<c> (30)")
 	  TimDuong(201,198) ; Thu kho
 	  CtrClick(575,287) ; Click Th? Kh?
    Sleep(4000)

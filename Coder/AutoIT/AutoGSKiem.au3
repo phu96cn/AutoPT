@@ -2,7 +2,6 @@
 #include <Func.au3>
 ;Func
 ;Send(MemoryRead($nvchieuhon,"char[100]"))
-
 $chose=InputBox("","Chon vi tri danh")
    Start()
 Func VeSungThanhDoanh()
@@ -56,7 +55,7 @@ Func NhanNV() ; dang sua
 	  ;CtrClick(403,328) ; Click bang lang
    ; Sleep(500)
 	  ;CtrClick(303,328) ; ket thuc
-	  CtrKeyboard('^{ESC}')
+	  CtrKeyboard('{ESC}')
 	  Sleep(2000)
    Wend
 EndFunc

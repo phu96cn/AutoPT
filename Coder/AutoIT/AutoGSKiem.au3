@@ -53,6 +53,7 @@ Func NhanNV() ; dang sua
 	  ;CtrClick(403,328) ; Click bang lang
    ; Sleep(500)
 	  CtrClick(303,328) ; ket thuc
+	  Sleep(2000)
 	  CtrClick(303,328) ; ket thuc
 	  ;CtrKeyboard('{ESC}')
 	  Sleep(2000)

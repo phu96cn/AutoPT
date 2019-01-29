@@ -10,6 +10,8 @@ $BaseAddress_tien= 0x00765414
 $BaseAddress_Nhiemvu=0x00761A98
 $BaseAddress_TTudanh =0xad3ac0
 $BaseAddress_CapNv=0x5A1C44 ;
+$BaseAddress_CamVP=0x751290
+MemoryWrite($BaseAddress_CamVP,1,"Int")
 ;Address
 $Add_nhaptdX=_MemoryRead($baseAddress_nhaptd,$hw) + 0x314 ;Address input X
 $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y

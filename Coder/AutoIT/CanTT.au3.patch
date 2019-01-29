@@ -1,0 +1,29 @@
+Index: CanTT.au3
+===================================================================
+--- CanTT.au3	(revision 22)
++++ CanTT.au3	(working copy)
+@@ -2,14 +2,24 @@
+ $hWnd = WinGetHandle(" Phong Than_Dong Thien Phuc Dia")
+ $Pid=WinGetProcess ($hWnd)
+ Global $hw= _MemoryOpen($Pid)
+ $AddressCap2 = _memoryread($AddressCap1,$hw)+0x1C
+-While(_memoryread($AddressCap2,$hw,"Int")<18)
++Start()
++Func Start()
+    ControlClick($hWnd, "", "","left",1,312-3,378-25)
+    Sleep(1000)
+    ControlClick($hWnd, "", "","left",1,312-3,378-25)
+    Sleep(1000)
+    ControlClick($hWnd, "", "","left",1,312-3,378-25)
++ 	While(_memoryread($AddressCap2,$hw,"Int")<25)
+    Sleep(180000)
+-WEnd
+\ No newline at end of file
++   	ControlClick($hWnd, "", "","left",1,312-3,378-25)
++   	Sleep(1000)
++   	ControlClick($hWnd, "", "","left",1,312-3,378-25)
++   	Sleep(1000)
++  	 	ControlClick($hWnd, "", "","left",1,312-3,378-25)
++   WEnd
++EndFunc
+\ No newline at end of file

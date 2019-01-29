@@ -93,6 +93,29 @@ Func TimDuong(ByRef $ValueX,ByRef $ValueY)
 	  Sleep(2000)
    WEnd
 EndFunc
+Func TimToaDo(ByRef $ValueX,ByRef $ValueY)
+   While(MemoryRead($Add_HP,"int")==0)
+	  CtrClick(276,296)
+	  Sleep(1000)
+	  Start()
+	  WEnd
+   $Thanhht=LayTenThanh()
+   MemoryWrite($Add_nhaptdX,$ValueX,"CHAR[20]")
+   MemoryWrite($Add_nhaptdY,$ValueY,"CHAR[20]")
+   CtrClick(747,177)
+   Sleep(1000)
+   While (KtraToado($ValueX,$ValueY))
+	  CtrClick(747,177)
+	  While (_MemoryRead(0x759CD1,$hw))
+		 While(MemoryRead($Add_HP,"int")==0)
+		 CtrClick(276,296)
+		 Sleep(1000)
+		 Start()
+		 WEnd
+		 Sleep(2000)
+	  WEnd
+   WEnd
+EndFunc
 Func LayTenThanh()
    $thanh= MemoryRead( $Add_thanhad,"char[20]")
    Return $thanh

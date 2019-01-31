@@ -11,7 +11,7 @@ $BaseAddress_Nhiemvu=0x00761A98
 $BaseAddress_TTudanh =0xad3ac0
 $BaseAddress_CapNv=0x5A1C44 ;
 $BaseAddress_CamVP=0x751290
-MemoryWrite($BaseAddress_CamVP,1,"Int")
+;MemoryWrite($BaseAddress_CamVP,1,"Int")
 ;Address
 $Add_nhaptdX=_MemoryRead($baseAddress_nhaptd,$hw) + 0x314 ;Address input X
 $Add_nhaptdY=_MemoryRead($baseAddress_nhaptd,$hw) + 0x524 ;Address input Y
@@ -80,8 +80,7 @@ Func TimDuong(ByRef $ValueX,ByRef $ValueY)
 	  CtrClick(276,296)
 	  Sleep(1000)
 	  Start()
-	  WEnd
-   $Thanhht=LayTenThanh()
+   WEnd
    MemoryWrite($Add_nhaptdX,$ValueX,"CHAR[20]")
    MemoryWrite($Add_nhaptdY,$ValueY,"CHAR[20]")
    CtrClick(747,177)
@@ -108,14 +107,12 @@ Func TimToaDo(ByRef $ValueX,ByRef $ValueY)
    Sleep(1000)
    While (KtraToado($ValueX,$ValueY))
 	  CtrClick(747,177)
-	  While (_MemoryRead(0x759CD1,$hw))
 		 While(MemoryRead($Add_HP,"int")==0)
 		 CtrClick(276,296)
 		 Sleep(1000)
 		 Start()
 		 WEnd
-		 Sleep(2000)
-	  WEnd
+		 Sleep(5000)
    WEnd
 EndFunc
 Func LayTenThanh()

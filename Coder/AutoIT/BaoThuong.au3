@@ -30,12 +30,12 @@ ManhTan("TrieuCa")
 EndFunc
 Func TrieuCa_Xiviu()
 TrieuCa("ManhTan")
-ManhTan("YenSon")
-YenSon("SungThanhDaiDoanh")
+ManhTan("DuHon")
+DuHon("XiViu")
 EndFunc
 Func Xiviu_TrieuCa()
-SungThanhDaiDoanh("YenSon")
-YenSon("ManhTan")
+XiViu("DuHon")
+DuHon("ManhTan")
 ManhTan("TrieuCa")
 EndFunc
 Func TrieuCa_NgocHuCung()

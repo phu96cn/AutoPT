@@ -1,6 +1,6 @@
 #include <Func.au3>
 ;imToaDo(201,205);1
-;Send("TimToaDo("&Int(MemoryRead($Add_toadonvX,"Int")/256)&","&Int(MemoryRead($Add_toadonvY,"Int")/512)&")")
+Send("TimToaDo("&Int(MemoryRead($Add_toadonvX,"Int")/256)&","&Int(MemoryRead($Add_toadonvY,"Int")/512)&")")
 ;Send(MemoryRead($Add_thanhad,"Char[100]"))
 Func TrieuCa(ByRef $Type)
    Switch $Type
@@ -136,12 +136,25 @@ Func XiViu(ByRef $Type)
 	  TimToaDo(221,190)
 	  TimToaDo(229,187)
    Case "DuHon"
-	  TimToaDo(203,185);2
+	  TimToaDo(195,205)
+TimToaDo(191,203)
+TimToaDo(187,201)
+TimToaDo(187,199)
+TimToaDo(182,199)
 	  While KtraThanh("Du Hån") == 0
-		 TimDuong(195,181); Cua Manh Tan
-		 CtrClick(158,118); chuyen map
+		 TimToaDo(179,196); Cua DuHon
+		 CtrClick(274,279); chuyen map
  	 	 Sleep(2000)
 	  WEnd
+TimToaDo(225,224)
+TimToaDo(223,221)
+TimToaDo(221,217)
+TimToaDo(218,212)
+TimToaDo(217,209)
+   Case "TapThuong"
+	  TimToaDo(196,204)
+TimToaDo(196,206)
+TimToaDo(195,209)
    EndSwitch
 EndFunc
 Func MieuCuong(ByRef $Type)
@@ -198,11 +211,23 @@ TimToaDo(205,186)
 TimToaDo(209,189)
 TimToaDo(214,192)
    Case "DuHon"
+TimToaDo(197,207)
+TimToaDo(194,209)
+TimToaDo(189,209)
+TimToaDo(185,212)
+TimToaDo(183,215)
+TimToaDo(181,219)
+TimToaDo(179,223)
 	  While KtraThanh("Du Hån") == 0
-		 TimDuong(195,181); Cua Manh Tan
-		 CtrClick(158,118); chuyen map
+		 TimDuong(178,256); Cua DuHon
+		 CtrClick(500,340); chuyen map
  	 	 Sleep(2000)
 	  WEnd
+TimToaDo(201,192)
+TimToaDo(202,196)
+TimToaDo(204,200)
+TimToaDo(207,203)
+TimToaDo(210,205)
    Case "TamSon"
 TimToaDo(198,203)
 TimToaDo(193,202)
@@ -220,6 +245,48 @@ TimToaDo(203,203)
 TimToaDo(198,203)
 TimToaDo(192,203)
 TimToaDo(188,200)
+   EndSwitch
+EndFunc
+Func DuHon(ByRef $Type)
+   Switch $Type
+   Case "ManhTan"
+TimToaDo(213,207)
+TimToaDo(209,203)
+TimToaDo(204,200)
+TimToaDo(202,196)
+TimToaDo(200,192)
+
+	  While KtraThanh("M¹nh T©n") == 0
+		 TimToaDo(199,189); Cua Manh Tan
+		 CtrClick(439,121); chuyen map
+ 	 	 Sleep(2000)
+	  WEnd
+	  TimToaDo(182,220)
+TimToaDo(183,216)
+TimToaDo(185,212)
+TimToaDo(189,209)
+TimToaDo(194,210)
+TimToaDo(197,208)
+TimToaDo(200,206)
+   Case "XiViu"
+	  TimToaDo(214,207)
+TimToaDo(217,209)
+TimToaDo(219,212)
+TimToaDo(220,216)
+TimToaDo(222,219)
+TimToaDo(223,222)
+TimToaDo(226,224)
+TimToaDo(228,226)
+	  While KtraThanh("Xi V­u Mé") == 0
+		 TimToaDo(228,227); Cua SungThanhDaiDoanh
+		 CtrClick(652,359); chuyen map
+ 	 	 Sleep(2000)
+	  WEnd
+	  TimToaDo(181,199)
+TimToaDo(186,198)
+TimToaDo(187,201)
+TimToaDo(189,203)
+TimToaDo(193,203)
    EndSwitch
 EndFunc
 Func YenSon(ByRef $Type)
@@ -254,15 +321,16 @@ TimToaDo(201,200)
  	 	 Sleep(2000)
 	  WEnd
 	  TimToaDo(208,202)
-   Case "TapThuong"
-	  TimToaDo(211,201)
-TimToaDo(215,198)
-TimToaDo(217,197)
+
    EndSwitch
 EndFunc
 Func SungThanhDaiDoanh(ByRef $Type)
 
    Switch $Type
+   Case "TapThuong"
+	  TimToaDo(211,201)
+TimToaDo(215,198)
+TimToaDo(217,197)
    Case "SungThanh"
 
 	  While KtraThanh("Sïng thµnh") == 0
